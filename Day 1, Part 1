@@ -1,0 +1,18 @@
+#include <fstream>
+
+using namespace std;
+
+ifstream fin ("data.in");
+ofstream fout ("data.out");
+
+int x;
+long long sol;
+
+int main()
+{
+    while(fin>>x){
+        sol += x;
+    }
+    fout<<sol;
+    return 0;
+}
