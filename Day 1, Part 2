@@ -1,0 +1,38 @@
+#include <fstream>
+
+using namespace std;
+
+ifstream fin ("data.in");
+ofstream fout ("data.out");
+
+int x, k, v[1000000], poz[1000000], neg[1000000];
+long long sol;
+
+int main()
+{
+    while(fin>>x){
+        k++;
+        v[k] = x;
+    }
+    poz[0] = 1;
+    while(true){
+        for(int i = 1; i <= k; i++){
+            sol += v[i];
+            if(sol < 0){
+                neg[-sol]++;
+                if(neg[-sol] == 2){
+                    fout<<sol;
+                    return 0;
+                }
+            }
+            else if(sol >= 0){
+                poz[sol]++;
+                if(poz[sol] == 2){
+                    fout<<sol;
+                    return 0;
+                }
+            }
+        }
+    }
+    return 0;
+}
