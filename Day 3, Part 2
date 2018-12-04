@@ -1,0 +1,63 @@
+#include <fstream>
+
+using namespace std;
+
+ifstream fin ("data.in");
+ofstream fout ("data.out");
+
+char s[100];
+int poz1[2005], poz2[2005], dim1[2005], dim2[20005], v[10003][10003], cont, k, sol;
+bool ok;
+///cel mai brut existent
+int main()
+{
+    while(fin.getline(s, 200)){
+        k++;
+        for(int i = 0; s[i] != 0; i++){
+            if(s[i] == '@' && s[i + 1] == ' '){
+                for(int j = i + 2; s[j] != ','; j++){
+                    poz1[k] = poz1[k] * 10 + (s[j] - '0');
+                }
+            }
+            else if(s[i] == ','){
+                for(int j = i + 1; s[j] != ':'; j++){
+                    poz2[k] = poz2[k] * 10 + (s[j] - '0');
+                }
+            }
+            else if(s[i] == ':' && s[i + 1] == ' '){
+                for(int j = i + 2; s[j] != 'x'; j++){
+                    dim1[k] = dim1[k] * 10 + (s[j] - '0');
+                }
+            }
+            else if(s[i] == 'x'){
+                for(int j = i + 1; s[j] != 0; j++){
+                    dim2[k] = dim2[k] * 10 + (s[j] - '0');
+                }
+            }
+        }
+        for(int i = poz1[k] + 1; i <= poz1[k] + dim1[k]; i++){
+            for(int j = poz2[k] + 1; j <= poz2[k] + dim2[k]; j++){
+                if(v[i][j] == 0){
+                    v[i][j] = k;
+                }
+                else{
+                    v[i][j] = -1;
+                }
+            }
+        }
+    }
+    for(int t = 1; t <= k; t++){
+        sol += t;
+        ok = true;
+        for(int i = poz1[t] + 1; i <= poz1[t] + dim1[t] && ok; i++){
+            for(int j = poz2[t] + 1; j <= poz2[t] + dim2[t] && ok; j++){
+                if(v[i][j] == -1){
+                    sol -= t;
+                    ok = false;
+                }
+            }
+        }
+    }
+    fout<<sol;
+    return 0;
+}
