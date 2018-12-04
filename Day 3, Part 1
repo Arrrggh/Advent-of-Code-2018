@@ -1,0 +1,55 @@
+#include <fstream>
+
+using namespace std;
+
+ifstream fin ("data.in");
+ofstream fout ("data.out");
+
+char s[100];
+int poz1, poz2, dim1, dim2, v[10003][10003], cont;
+
+///cel mai brut existent
+int main()
+{
+    while(fin.getline(s, 200)){
+        poz1 = 0; poz2 = 0; dim1 = 0; dim2 = 0;
+        for(int i = 0; s[i] != 0; i++){
+            if(s[i] == '@' && s[i + 1] == ' '){
+                for(int j = i + 2; s[j] != ','; j++){
+                    poz1 = poz1 * 10 + (s[j] - '0');
+                }
+            }
+            else if(s[i] == ','){
+                for(int j = i + 1; s[j] != ':'; j++){
+                    poz2 = poz2 * 10 + (s[j] - '0');
+                }
+            }
+            else if(s[i] == ':' && s[i + 1] == ' '){
+                for(int j = i + 2; s[j] != 'x'; j++){
+                    dim1 = dim1 * 10 + (s[j] - '0');
+                }
+            }
+            else if(s[i] == 'x'){
+                for(int j = i + 1; s[j] != 0; j++){
+                    dim2 = dim2 * 10 + (s[j] - '0');
+                }
+            }
+        }
+        for(int i = poz1 + 1; i <= poz1 + dim1; i++){
+            for(int j = poz2 + 1; j <= poz2 + dim2; j++){
+                v[i][j]++;
+            }
+        }
+    }
+    for(int i = 1; i <= 10000; i++){
+        for(int j = 1; j <= 10000; j++){
+            if(v[i][j] != 0 && v[i][j] != 1){
+                cont++;
+            }
+            //fout<<v[i][j]<<" ";
+        }
+       // fout<<"\n";
+    }
+    fout<<cont;
+    return 0;
+}
